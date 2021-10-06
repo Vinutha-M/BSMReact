@@ -7,6 +7,10 @@ import { BrowserRouter } from "react-router-dom";
 import Book from "./components/books";
 import AddBook from "./components/addbook";
 import UpdateBook from "./components/updatebook";
+import Category from "./components/categories";
+import AddCategory from "./components/addcategory";
+import UpdateCategory from "./components/updatecategory";
+
 function App() {
   return (
     <div className="App">
@@ -16,6 +20,9 @@ function App() {
       <Route path="/books" component={Book} />
       <Route path="/addbook" component={AddBook} />
       <Route path="/update/:bookId" component={UpdateBook} />
+      <Route path="/categories" component={Category} />
+      <Route path="/addcategory" component={AddCategory} />
+      <Route path="/update/:categoryId" component={UpdateCategory} />
       </Switch>
 
     
