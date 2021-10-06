@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { NavLink } from "react-router-dom";
 import Book from "./books";
@@ -28,7 +28,6 @@ const Nav = () => {
                   Book
                 </NavLink>
                 </li>
-              
               
             </ul>
            

@@ -27,6 +27,8 @@ class AddBook extends React.Component {
     description: Joi.string().min(3).max(30).alphanum().required(),
     isbn: Joi.string().min(4).max(10).required(),
     price: Joi.number().min(1000).required(),
+    publishDate: Joi.number().min(1000).required(),
+    lastUpdatedOn: Joi.number().min(1000).required(),
   };
 
   handleChange = (event) => {
@@ -201,6 +203,36 @@ class AddBook extends React.Component {
             {this.state.errors && (
               <p className="text-danger font-monospace text-start">
                 {this.state.errors.price }
+              </p>
+            )}
+            <TextField
+              id="filled-basic"
+              label="Publish Date "
+              variant="standard"
+              fullWidth
+              style={{ marginBottom: "10px" }}
+              name="publishDate "
+              value={this.state.publishDate }
+              onChange={this.handleChange}
+            />
+            {this.state.errors && (
+              <p className="text-danger font-monospace text-start">
+                {this.state.errors.publishDate }
+              </p>
+            )}
+            <TextField
+              id="filled-basic"
+              label="Last Updated On "
+              variant="standard"
+              fullWidth
+              style={{ marginBottom: "10px" }}
+              name="lastUpdatedOn "
+              value={this.state.lastUpdatedOn }
+              onChange={this.handleChange}
+            />
+            {this.state.errors && (
+              <p className="text-danger font-monospace text-start">
+                {this.state.errors.lastUpdatedOn }
               </p>
             )}
             <Button
