@@ -12,23 +12,25 @@ import React, { Component } from "react";
       books: [],
     };
     componentDidMount() {
-      // axios
-        //.get("https://jsonplaceholder.typicode.com/posts")
-        //.then((response) => this.setState({ posts: response.data }))
-        //.catch((error) => console.log(error));
+       axios
+        .get("http://localhost:8081/books")
+        .then((res) => {
+          console.log(res.data);
+         this.setState({ books:res.data });
+        });
     }
   
     handleDelete = (bookId) => {
       console.log(bookId);
-   //  axios
-        // .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
-        // .then((res) => {
-        //   alert("Deleted post successfully!");
-        //   console.log(res);
-        //   const posts = this.state.posts.filter((p) => p.id == id);//1
-        //   this.setState({ posts: posts });
-        // })
-        // .catch((error) => console.log(error));
+      axios
+      .delete(`http://localhost:8081/books/delete/${bookId}`)
+      .then((res) => {
+        alert("Deleted book successfully!");
+        console.log(res);
+        const books = this.state.books.filter((b) => b.bookId != bookId);//1
+        this.setState({ books: books });
+        })
+        .catch((error) => console.log(error));
     };
     render() {
       return (

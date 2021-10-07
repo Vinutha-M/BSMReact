@@ -14,23 +14,24 @@ import React, { Component } from "react";
     componentDidMount() {
        axios
         .get("http://localhost:8081/categories")
-        .then((response) => {
-          console.log(response.data);
-          this.setState({ categories: response.data })})
-      .catch((error) => console.log(error));
+        .then((res) => {
+          console.log(res.data);
+          this.setState({ categories:res.data });
+        });
+      
     }
   
     handleDelete = (categoryId) => {
-        console.log(categoryId);
-   //  axios
-        // .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
-        // .then((res) => {
-        //   alert("Deleted post successfully!");
-        //   console.log(res);
-        //   const posts = this.state.posts.filter((p) => p.id == id);//1
-        //   this.setState({ posts: posts });
-        // })
-        // .catch((error) => console.log(error));
+      console.log(categoryId);
+      axios
+        .delete(`http://localhost:8081/categories/delete/${categoryId}`)
+        .then((res) => {
+         alert("Deleted categories  successfully!");
+         console.log(res);
+         const categories = this.state.categories.filter((c) => c.categoryId != categoryId);//1
+         this.setState({ categories: categories });
+        })
+        .catch((error) => console.log(error));
     };
     render() {
       return (
