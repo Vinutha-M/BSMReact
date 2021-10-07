@@ -12,10 +12,12 @@ import React, { Component } from "react";
       categories: [],
     };
     componentDidMount() {
-      // axios
-        //.get("https://jsonplaceholder.typicode.com/posts")
-        //.then((response) => this.setState({ posts: response.data }))
-        //.catch((error) => console.log(error));
+       axios
+        .get("http://localhost:8081/categories")
+        .then((response) => {
+          console.log(response.data);
+          this.setState({ categories: response.data })})
+      .catch((error) => console.log(error));
     }
   
     handleDelete = (categoryId) => {
