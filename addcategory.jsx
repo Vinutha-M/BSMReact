@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { TextField, Button, Paper, Typography, Box } from "@material-ui/core";
-//import axios from "axios";
+import axios from "axios";
 import Joi from "joi-browser";
 
 class AddCategory extends React.Component {
   state = {
     category: {
-      categoryId: "",
       categoryName: "",
     },
     errors: {},
@@ -15,13 +14,12 @@ class AddCategory extends React.Component {
 
   // schema to validate
   schema = {
-    categoryId: Joi.number().min(1000).required(),
     categoryName: Joi.string().min(3).max(30).alphanum().required(),
   };
 
   handleChange = (event) => {
-    // event.target.name - name of field
-    // event.target.value - value entered by the user
+    //event.target.name - name of field
+    //event.target.value - value entered by the user
     //this.setState({ [event.target.name]: event.target.value }); userId,id
     const category = { ...this.state.category };
     //post["userId"] = 1001;
@@ -72,17 +70,17 @@ class AddCategory extends React.Component {
     console.log(errors);
 
     if (errors) return;
-    // axios
-    //   .post("https://jsonplaceholder.typicode.com/posts", this.state.post)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     alert("Added Post successfully!!");
-    //     this.props.history.push("/posts");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     this.setState({ errMsg: error.response.data.message });
-    //   });
+    axios
+      .post("http://localhost:8081/categories", this.state.category)
+      .then((res) => {
+         console.log(res.data);
+         alert("Added Category successfully!!");
+         this.props.history.push("/categories");
+       })
+        .catch((error) => {
+          console.log(error);
+          this.setState({ errMsg: errors.res.data.message });
+       });
   };
   render() {
     return (
@@ -105,26 +103,11 @@ class AddCategory extends React.Component {
           <Paper elevation={3} style={{ padding: "15px" }}>
             <TextField
               id="filled-basic"
-              label="Category Id "
+              label="Category Name"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="categoryId "
-              value={this.state.categoryId }
-              onChange={this.handleChange}
-            />
-            {this.state.errors && (
-              <p className="text-danger font-monospace text-start">
-                {this.state.errors.categoryId }
-              </p>
-            )}
-            <TextField
-              id="filled-basic"
-              label="Category Name "
-              variant="standard"
-              fullWidth
-              style={{ marginBottom: "10px" }}
-              name="categoryName "
+              name="categoryName"
               value={this.state.categoryName}
               onChange={this.handleChange}
             />

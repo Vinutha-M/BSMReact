@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { TextField, Button, Paper, Typography, Box } from "@material-ui/core";
-//import axios from "axios";
+import axios from "axios";
 import Joi from "joi-browser";
 
 class AddBook extends React.Component {
   state = {
     book: {
-      bookId: "",
       title: "",
       author: "",
       description: "",
@@ -21,14 +20,13 @@ class AddBook extends React.Component {
 
   // schema to validate
   schema = {
-    bookId: Joi.number().min(1000).required(),
     title: Joi.string().min(3).max(30).alphanum().required(),
-    author: Joi.string().min(3).max(30).alphanum().required(),
-    description: Joi.string().min(3).max(30).alphanum().required(),
-    isbn: Joi.string().min(4).max(10).required(),
-    price: Joi.number().min(1000).required(),
-    publishDate: Joi.number().min(1000).required(),
-    lastUpdatedOn: Joi.number().min(1000).required(),
+    author: Joi.string().required(),
+    description: Joi.string().required(),
+    isbn: Joi.string().min(4).max(8).required(),
+    price: Joi.number().positive().greater(0).required(),
+    publishDate: Joi.date().raw().required(),
+    lastUpdatedOn: Joi.date().raw().required(),
   };
 
   handleChange = (event) => {
@@ -52,9 +50,9 @@ class AddBook extends React.Component {
   validate = () => {
     const errors = {};
     // Validate account details with schema
-    const result = Joi.validate(this.state.book, this.schema, {
-      abortEarly: false,
-    });
+    const result = Joi.validate(this.state.book, this.schema, 
+      {abortEarly: false, }
+      );
     console.log(result);
 
     // Initialize error object with errors, if validate method returns errors
@@ -84,17 +82,17 @@ class AddBook extends React.Component {
     console.log(errors);
 
     if (errors) return;
-    // axios
-    //   .post("https://jsonplaceholder.typicode.com/posts", this.state.post)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     alert("Added Post successfully!!");
-    //     this.props.history.push("/posts");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     this.setState({ errMsg: error.response.data.message });
-    //   });
+    axios
+       .post("http://localhost:8081/books", this.state.book)
+       .then((res) => {
+         console.log(res.data);
+        alert("Added Book successfully!!");
+         this.props.history.push("/books");
+       })
+       .catch((error) => {
+        console.log(error);
+        this.setState({ errMsg: errors.res.data.message });
+      });
   };
   render() {
     return (
@@ -117,26 +115,11 @@ class AddBook extends React.Component {
           <Paper elevation={3} style={{ padding: "15px" }}>
             <TextField
               id="filled-basic"
-              label="Book Id "
+              label="Title"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="bookId "
-              value={this.state.bookId }
-              onChange={this.handleChange}
-            />
-            {this.state.errors && (
-              <p className="text-danger font-monospace text-start">
-                {this.state.errors.bookId }
-              </p>
-            )}
-            <TextField
-              id="filled-basic"
-              label="Title "
-              variant="standard"
-              fullWidth
-              style={{ marginBottom: "10px" }}
-              name="title "
+              name="title"
               value={this.state.title}
               onChange={this.handleChange}
             />
@@ -147,11 +130,11 @@ class AddBook extends React.Component {
             )}
             <TextField
               id="filled-basic"
-              label="Author "
+              label="Author"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="author "
+              name="author"
               value={this.state.author }
               onChange={this.handleChange}
             />
@@ -162,11 +145,11 @@ class AddBook extends React.Component {
             )}
             <TextField
               id="filled-basic"
-              label="Description "
+              label="Description"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="description "
+              name="description"
               value={this.state.description }
               onChange={this.handleChange}
             />
@@ -177,11 +160,11 @@ class AddBook extends React.Component {
             )}
             <TextField
               id="filled-basic"
-              label="Isbn "
+              label="Isbn"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="isbn "
+              name="isbn"
               value={this.state.isbn }
               onChange={this.handleChange}
             />
@@ -192,11 +175,11 @@ class AddBook extends React.Component {
             )}
             <TextField
               id="filled-basic"
-              label="Price "
+              label="Price"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="price "
+              name="price"
               value={this.state.price }
               onChange={this.handleChange}
             />
@@ -207,11 +190,11 @@ class AddBook extends React.Component {
             )}
             <TextField
               id="filled-basic"
-              label="Publish Date "
+              label="Publish Date"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="publishDate "
+              name="publishDate"
               value={this.state.publishDate }
               onChange={this.handleChange}
             />
@@ -222,11 +205,11 @@ class AddBook extends React.Component {
             )}
             <TextField
               id="filled-basic"
-              label="Last Updated On "
+              label="Last Updated On"
               variant="standard"
               fullWidth
               style={{ marginBottom: "10px" }}
-              name="lastUpdatedOn "
+              name="lastUpdatedOn"
               value={this.state.lastUpdatedOn }
               onChange={this.handleChange}
             />
