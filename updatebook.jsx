@@ -5,7 +5,6 @@ import axios from "axios";
 class UpdateBook extends React.Component {
   state = {
     book: {
-        bookId: "",
         title: "",
         author: "",
         description: "",
@@ -14,17 +13,19 @@ class UpdateBook extends React.Component {
         publishDate:" ",
         lastUpdatedOn:" ",
     },
+    errors: {},
+    errMsg: "",
   };
   componentDidMount() {
-   /* axios
-      .get(
-        `https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`
+    console.log(this.props.match.params.bookId);
+    axios
+      .get(`http://localhost:8081/books/${this.props.match.params.bookId}`
       )
       .then((res) => {
         console.log(res.data);
-        this.setState({ post: res.data });
+        this.setState({ book: res.data });
       })
-      .catch((error) => console.log(error));*/
+      .catch((error) => console.log(error));
   }
   handleChange = (event) => {
     const book = { ...this.state.book };
@@ -35,20 +36,19 @@ class UpdateBook extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    /*axios
-      .put(
-        `https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`,
-        this.state.post
+    axios
+      .put(`http://localhost:8081/books/${this.props.match.params.bookId}`,
+        this.state.book
       )
       .then((res) => {
         console.log(res.data);
-        alert("Updated Post successfully!!");
-        this.props.history.push("/posts");
+        alert("Updated Book successfully!!");
+        this.props.history.push("/books");
       })
       .catch((error) => {
         console.log(error);
         return;
-      });*/
+      });
   };
 
   render() {
@@ -66,16 +66,6 @@ class UpdateBook extends React.Component {
           onSubmit={this.handleSubmit}
         >
           <Paper elevation={3} style={{ padding: "15px" }}>
-            <TextField
-              id="filled-basic"
-              label="Book Id"
-              variant="standard"
-              fullWidth
-              style={{ marginBottom: "10px" }}
-              name="bookId"
-              value={this.state.book.bookId}
-              onChange={this.handleChange}
-            />
             <TextField
               id="filled-basic"
               label="Title"

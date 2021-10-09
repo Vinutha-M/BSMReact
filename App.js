@@ -19,10 +19,10 @@ function App() {
       <Switch>
       <Route path="/books" component={Book} />
       <Route path="/addbook" component={AddBook} />
-      <Route path="/update/:bookId" component={UpdateBook} />
+      <Route path="/update/book/:bookId" component={UpdateBook} />
       <Route path="/categories" component={Category} />
       <Route path="/addcategory" component={AddCategory} />
-      <Route path="/update/:categoryId" component={UpdateCategory} />
+      <Route path="/update/category/:categoryId" component={UpdateCategory} />
       </Switch>
 
     

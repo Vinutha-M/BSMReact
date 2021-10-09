@@ -5,20 +5,22 @@ import axios from "axios";
 class UpdateCategory extends React.Component {
   state = {
     category: {
-        categoryId: "",
         categoryName: "",
     },
+    errors: {},
+    errMsg: "",
   };
   componentDidMount() {
-   /* axios
+    console.log(this.props.match.params.categoryId);
+    axios
       .get(
-        `https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`
+        `http://localhst:8081/categories/${this.props.match.params.categoryId}`
       )
       .then((res) => {
         console.log(res.data);
-        this.setState({ post: res.data });
+        this.setState({ category: res.data });
       })
-      .catch((error) => console.log(error));*/
+      .catch((error) => console.log(error));
   }
   handleChange = (event) => {
     const category = { ...this.state.category };
@@ -29,20 +31,18 @@ class UpdateCategory extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    /*axios
-      .put(
-        `https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`,
-        this.state.post
+    axios.put(`http://localhost:8081/categories/${this.props.match.params.categoryId}`,
+        this.state.category
       )
       .then((res) => {
         console.log(res.data);
         alert("Updated Post successfully!!");
-        this.props.history.push("/posts");
+        this.props.history.push("/categories");
       })
       .catch((error) => {
         console.log(error);
         return;
-      });*/
+      });
   };
 
   render() {
@@ -60,16 +60,6 @@ class UpdateCategory extends React.Component {
           onSubmit={this.handleSubmit}
         >
           <Paper elevation={3} style={{ padding: "15px" }}>
-            <TextField
-              id="filled-basic"
-              label="Category Id"
-              variant="standard"
-              fullWidth
-              style={{ marginBottom: "10px" }}
-              name="categoryId"
-              value={this.state.category.categoryId}
-              onChange={this.handleChange}
-            />
             <TextField
               id="filled-basic"
               label="Category Name"
